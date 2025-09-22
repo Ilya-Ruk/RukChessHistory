@@ -356,10 +356,12 @@ int ABDADA_Search(BoardItem* Board, int Alpha, int Beta, int Depth, const int Pl
 
 			++Board->Nodes;
 
+			GiveCheck = IsInCheck(Board, Board->CurrentColor);
+
 			// Zero window search for reduced depth
 			TempBestMoves[0] = { 0, 0, 0 };
 
-			Score = -ABDADA_Search(Board, -Beta, -Beta + 1, Depth - 1 - NullMoveReduction, Ply + 1, TempBestMoves, FALSE, FALSE, FALSE, 0);
+			Score = -ABDADA_Search(Board, -Beta, -Beta + 1, Depth - 1 - NullMoveReduction, Ply + 1, TempBestMoves, FALSE, GiveCheck, FALSE, 0);
 
 			UnmakeNullMove(Board);
 
