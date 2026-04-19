@@ -71,8 +71,8 @@
 #define MAX_GEN_MOVES       256
 #define MAX_GAME_MOVES      1024
 
-//#define RAZORING
-//#define FUTILITYPRUNING
+//#define REVERSEFUTILITYPRUNING_1
+//#define REVERSEFUTILITYPRUNING_2
 #define NULLMOVE
 
 #define CASTLE_WHITE_KING		1 // White O-O
@@ -1608,9 +1608,9 @@ int Search(int Alpha, int Beta, const int Depth, const int Ply, MoveItem *BestMo
 {
 	int Score;
 
-  #if defined(RAZORING) || defined(FUTILITYPRUNING) || defined(NULLMOVE)
+  #if defined(REVERSEFUTILITYPRUNING_1) || defined(REVERSEFUTILITYPRUNING_2) || defined(NULLMOVE)
 	int CurrentEvaluation;
-  #endif // RAZORING || FUTILITYPRUNING || NULLMOVE
+  #endif // REVERSEFUTILITYPRUNING_1 || REVERSEFUTILITYPRUNING_2 || NULLMOVE
 
 	MoveItem TempBestMoves[MAX_PLY];
 
@@ -1668,21 +1668,21 @@ int Search(int Alpha, int Beta, const int Depth, const int Ply, MoveItem *BestMo
         return GetEvaluation();
     }
 
-  #if defined(RAZORING) || defined(FUTILITYPRUNING) || defined(NULLMOVE)
+  #if defined(REVERSEFUTILITYPRUNING_1) || defined(REVERSEFUTILITYPRUNING_2) || defined(NULLMOVE)
 	if (UsePruning && !PV && !IsCheck) {
 		CurrentEvaluation = GetEvaluation();
 
-		#ifdef RAZORING
+		#ifdef REVERSEFUTILITYPRUNING_1
 		if (Depth <= 4 && (CurrentEvaluation - QUEEN_SCORE) >= Beta) {
 			return Beta;
 		}
-		#endif // RAZORING
+		#endif // REVERSEFUTILITYPRUNING_1
 
-		#ifdef FUTILITYPRUNING
+		#ifdef REVERSEFUTILITYPRUNING_2
 		if (Depth <= 2 && (CurrentEvaluation - PAWN_SCORE / 2) >= Beta) {
 			return Beta;
 		}
-		#endif // FUTILITYPRUNING
+		#endif // REVERSEFUTILITYPRUNING_2
 
 		#ifdef NULLMOVE
 		if (Depth > 1 && CurrentEvaluation >= Beta && NonPawnMaterial()) {
@@ -1735,7 +1735,7 @@ int Search(int Alpha, int Beta, const int Depth, const int Ply, MoveItem *BestMo
 		} // if
 		#endif // NULLMOVE
 	} // if
-  #endif // RAZORING || FUTILITYPRUNING || NULLMOVE
+  #endif // REVERSEFUTILITYPRUNING_1 || REVERSEFUTILITYPRUNING_2 || NULLMOVE
 
 	GenerateAllMoves(MoveList, &GenMoveCount);
 
