@@ -3,19 +3,19 @@ Historical versions of RukChess.
 
 ## Chess 0.1
 Version: 06.03.2017  
-Compiler: GCC 14.2.0 (MSYS2)
+Compiler: GCC 15.2.0 (MSYS2)
 
 ## Chess 0.2
 Version: 12.12.2017  
-Compiler: GCC 14.2.0 (MSYS2)
+Compiler: GCC 15.2.0 (MSYS2)
 
 ## Chess 0.3
 Version: 12.12.2017  
-Compiler: GCC 14.2.0 (MSYS2)
+Compiler: GCC 15.2.0 (MSYS2)
 
 ## Chess 1.0
 Version: 20.01.2019  
-Compiler: GCC 14.2.0 (MSYS2)
+Compiler: GCC 15.2.0 (MSYS2)
 
 ### Board Representation
 - [8x8 Board](https://www.chessprogramming.org/8x8_Board)
@@ -55,7 +55,7 @@ Compiler: GCC 14.2.0 (MSYS2)
     - [Mate Distance Pruning](https://www.chessprogramming.org/Mate_Distance_Pruning)
     - Bad capture pruning ([Static Exchange Evaluation](https://www.chessprogramming.org/Static_Exchange_Evaluation)) (disabled)
 
-### Evolution
+### Evaluation
 - [Simplified Evaluation Function](https://www.chessprogramming.org/Simplified_Evaluation_Function)
 
 ### Interface

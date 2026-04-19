@@ -1183,12 +1183,12 @@ void GetParametrs() // Ввод параметров поиска ходов
 	printf("Max. depth: ");
 	scanf("%d", &MaxInputDepth); // Максимальная (введённая) глубина просмотра, полуходов
 
-	MaxDepth = (MaxInputDepth > 0 && MaxInputDepth < MAX_DEPTH) ? MaxInputDepth : MAX_DEPTH;
+	MaxDepth = (MaxInputDepth >= 1 && MaxInputDepth <= MAX_DEPTH) ? MaxInputDepth : MAX_DEPTH;
 
 	printf("Max. time for move, sec.: ");
 	scanf("%d", &MaxInputTimeForMove); // Максимальное (введённое) время на ход, секунд
 
-	MaxTimeForMove = (MaxInputTimeForMove > 0 && MaxInputTimeForMove < MAX_TIME) ? MaxInputTimeForMove : MAX_TIME;
+	MaxTimeForMove = (MaxInputTimeForMove >= 1 && MaxInputTimeForMove <= MAX_TIME) ? MaxInputTimeForMove : MAX_TIME;
 }
 
 int MoveToInt(char * Str) // Преобразуем ход из строки в число

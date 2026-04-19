@@ -66,17 +66,19 @@
 #define MOVE_CASTLE_KING	32
 #define MOVE_CASTLE_QUEEN	64
 
-#define MAX_PLY		128
-#define MAX_TIME	86400
+#define MAX_PLY		        128
+#define MAX_TIME	        86400
+#define MAX_GEN_MOVES       256
+#define MAX_GAME_MOVES      1024
 
 //#define RAZORING
 //#define FUTILITYPRUNING
-//#define NULLMOVE
+#define NULLMOVE
 
-#define CASTLE_WHITE_KING		1 // White О-О
-#define CASTLE_WHITE_QUEEN	    2 // White О-О-О
-#define CASTLE_BLACK_KING	    4 // Black О-О
-#define CASTLE_BLACK_QUEEN		8 // Black О-О-О
+#define CASTLE_WHITE_KING		1 // White O-O
+#define CASTLE_WHITE_QUEEN	    2 // White O-O-O
+#define CASTLE_BLACK_KING	    4 // Black O-O
+#define CASTLE_BLACK_QUEEN		8 // Black O-O-O
 
 #define EXACT 1
 #define ALPHA 2
@@ -231,7 +233,7 @@ U64 PassantHash[64];
 
 HashItem HashTable[HASH_TABLE_SIZE];
 
-HistoryItem HistoryTable[1024];
+HistoryItem HistoryTable[MAX_GAME_MOVES];
 
 U64 HistoryHeuristics[2][6][64];
 
@@ -1213,7 +1215,7 @@ void GenerateAllMoves(MoveItem *MoveList, int *GenMoveCount)
 			(CastleFlags & CASTLE_WHITE_KING)
 			&& BoardPiece[61] == EMPTY && BoardPiece[62] == EMPTY
 			&& !CheckKing() && !CheckField(61) && !CheckField(62)
-		) { // White О-О
+		) { // White O-O
 			From = 60;
 			To = 62;
 
@@ -1224,7 +1226,7 @@ void GenerateAllMoves(MoveItem *MoveList, int *GenMoveCount)
 			(CastleFlags & CASTLE_WHITE_QUEEN)
 			&& BoardPiece[59] == EMPTY && BoardPiece[58] == EMPTY && BoardPiece[57] == EMPTY
 			&& !CheckKing() && !CheckField(59) && !CheckField(58)
-		) { // White О-О-О
+		) { // White O-O-O
 			From = 60;
 			To = 58;
 
@@ -1236,7 +1238,7 @@ void GenerateAllMoves(MoveItem *MoveList, int *GenMoveCount)
 			(CastleFlags & CASTLE_BLACK_KING)
 			&& BoardPiece[5] == EMPTY && BoardPiece[6] == EMPTY
 			&& !CheckKing() && !CheckField(5) && !CheckField(6)
-		) { // Black О-О
+		) { // Black O-O
 			From = 4;
 			To = 6;
 
@@ -1247,7 +1249,7 @@ void GenerateAllMoves(MoveItem *MoveList, int *GenMoveCount)
 			(CastleFlags & CASTLE_BLACK_QUEEN)
 			&& BoardPiece[3] == EMPTY && BoardPiece[2] == EMPTY && BoardPiece[1] == EMPTY
 			&& !CheckKing() && !CheckField(3) && !CheckField(2)
-		) { // Black О-О-О
+		) { // Black O-O-O
 			From = 4;
 			To = 2;
 
@@ -1510,7 +1512,7 @@ int Quiesce(int Alpha, int Beta, const int Depth, const int Ply, MoveItem *BestM
 	MoveItem TempBestMoves[MAX_PLY];
 
 	int GenMoveCount = 0;
-	MoveItem MoveList[256];
+	MoveItem MoveList[MAX_GEN_MOVES];
 
 	int BestMoveIndex;
 	U64 BestMoveScore;
@@ -1542,6 +1544,10 @@ int Quiesce(int Alpha, int Beta, const int Depth, const int Ply, MoveItem *BestM
 	if (Ply >= MAX_PLY) {
 		return GetEvaluation();
 	}
+
+    if (HalfMoveNumber >= MAX_GAME_MOVES) {
+        return GetEvaluation();
+    }
 
 	if (IsCheck || Depth >= 0) {
 		QuiescenceHashDepth = 0;
@@ -1703,7 +1709,7 @@ int Search(int Alpha, int Beta, const int Depth, const int Ply, MoveItem *BestMo
 	MoveItem TempBestMoves[MAX_PLY];
 
 	int GenMoveCount = 0;
-	MoveItem MoveList[256];
+	MoveItem MoveList[MAX_GEN_MOVES];
 
 	int BestMoveIndex;
 	U64 BestMoveScore;
@@ -1753,6 +1759,10 @@ int Search(int Alpha, int Beta, const int Depth, const int Ply, MoveItem *BestMo
 	if (Ply >= MAX_PLY) {
 		return GetEvaluation();
 	}
+
+    if (HalfMoveNumber >= MAX_GAME_MOVES) {
+        return GetEvaluation();
+    }
 
 	if (
 		Ply > 0
@@ -2109,7 +2119,7 @@ BOOL HumanMove(void)
 	char MoveStr[10];
 
 	int GenMoveCount = 0;
-	MoveItem MoveList[256];
+	MoveItem MoveList[MAX_GEN_MOVES];
 
 	PrintBoard();
 
@@ -2224,12 +2234,12 @@ void Game(const int HumanColor, const int ComputerColor)
 	printf("Max. depth: ");
 	scanf("%d", &MaxInputDepth);
 
-	MaxDepth = (MaxInputDepth > 0 && MaxInputDepth < MAX_PLY) ? MaxInputDepth : MAX_PLY;
+	MaxDepth = (MaxInputDepth >= 1 && MaxInputDepth <= MAX_PLY) ? MaxInputDepth : MAX_PLY;
 
 	printf("Max. time for move, sec.: ");
 	scanf("%d", &MaxInputTimeForMove);
 
-	MaxTimeForMove = (MaxInputTimeForMove > 0 && MaxInputTimeForMove < MAX_TIME) ? MaxInputTimeForMove : MAX_TIME;
+	MaxTimeForMove = (MaxInputTimeForMove >= 1 && MaxInputTimeForMove <= MAX_TIME) ? MaxInputTimeForMove : MAX_TIME;
 
 	Nodes = 0;
 	HashCount = 0;
@@ -2279,12 +2289,12 @@ void GameAuto(void)
 	printf("Max. depth: ");
 	scanf("%d", &MaxInputDepth);
 
-	MaxDepth = (MaxInputDepth > 0 && MaxInputDepth < MAX_PLY) ? MaxInputDepth : MAX_PLY;
+	MaxDepth = (MaxInputDepth >= 1 && MaxInputDepth <= MAX_PLY) ? MaxInputDepth : MAX_PLY;
 
 	printf("Max. time for move, sec.: ");
 	scanf("%d", &MaxInputTimeForMove);
 
-	MaxTimeForMove = (MaxInputTimeForMove > 0 && MaxInputTimeForMove < MAX_TIME) ? MaxInputTimeForMove : MAX_TIME;
+	MaxTimeForMove = (MaxInputTimeForMove >= 1 && MaxInputTimeForMove <= MAX_TIME) ? MaxInputTimeForMove : MAX_TIME;
 
 	Nodes = 0;
 	HashCount = 0;
@@ -2666,7 +2676,7 @@ void SaveGame(void)
 U64 CountMoves(const int Depth)
 {
 	int GenMoveCount = 0;
-	MoveItem MoveList[256];
+	MoveItem MoveList[MAX_GEN_MOVES];
 
 	U64 LegalMoveCounter = 0ULL;
 
@@ -2709,7 +2719,7 @@ void TestGenerateMoves(void)
 	printf("Max. depth: ");
 	scanf("%d", &MaxInputDepth);
 
-	MaxDepth = (MaxInputDepth > 0 && MaxInputDepth < MAX_PLY) ? MaxInputDepth : MAX_PLY;
+	MaxDepth = (MaxInputDepth >= 1 && MaxInputDepth <= MAX_PLY) ? MaxInputDepth : MAX_PLY;
 
 	printf("\n");
 
