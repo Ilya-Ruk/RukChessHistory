@@ -9,9 +9,76 @@ Compiler: GCC 15.2.0 (MSYS2)
 Version: 12.12.2017  
 Compiler: GCC 15.2.0 (MSYS2)
 
+### Board Representation
+- [8x8 Board](https://www.chessprogramming.org/8x8_Board)
+- [10x12 Board](https://www.chessprogramming.org/10x12_Board) for generating moves and checking attacks on the square
+- [Piece-Lists](https://www.chessprogramming.org/Piece-Lists)
+
+### Search
+- [Iterative Deepening](https://www.chessprogramming.org/Iterative_Deepening)
+- [Principal Variation Search](https://www.chessprogramming.org/Principal_Variation_Search)
+- [Move Ordering](https://www.chessprogramming.org/Move_Ordering)
+  - PV move
+  - Pawn promote moves (QRBN)
+  - Capture moves
+    - [MVV-LVA](https://www.chessprogramming.org/MVV-LVA)
+  - Quiet moves
+    - [History Heuristic](https://www.chessprogramming.org/History_Heuristic)
+- [Selectivity](https://www.chessprogramming.org/Selectivity)
+  - [Extensions](https://www.chessprogramming.org/Extensions)
+    - [Check Extensions](https://www.chessprogramming.org/Check_Extensions)
+  - [Pruning](https://www.chessprogramming.org/Pruning)
+    - [Reverse Futility Pruning](https://www.chessprogramming.org/Reverse_Futility_Pruning) (disabled)
+    - [Null Move Pruning](https://www.chessprogramming.org/Null_Move_Pruning)
+  - [Quiescence Search](https://www.chessprogramming.org/Quiescence_Search)
+
+### Evaluation
+- [Simplified Evaluation Function](https://www.chessprogramming.org/Simplified_Evaluation_Function)
+
+### Interface
+- [Command Line Interface](https://www.chessprogramming.org/CLI)
+
+### Others
+- [FEN](https://www.chessprogramming.org/Forsyth-Edwards_Notation) for load/save game from/to file
+- [Zobrist Hashing](https://www.chessprogramming.org/Zobrist_Hashing) for control repetition of positions
+
 ## Chess 0.3
 Version: 12.12.2017  
 Compiler: GCC 15.2.0 (MSYS2)
+
+### Board Representation
+- [8x8 Board](https://www.chessprogramming.org/8x8_Board)
+- [10x12 Board](https://www.chessprogramming.org/10x12_Board) for generating moves and checking attacks on the square
+- [Piece-Lists](https://www.chessprogramming.org/Piece-Lists)
+
+### Search
+- [Iterative Deepening](https://www.chessprogramming.org/Iterative_Deepening)
+- [Principal Variation Search](https://www.chessprogramming.org/Principal_Variation_Search)
+- [Transposition Table](https://www.chessprogramming.org/Transposition_Table)
+- [Move Ordering](https://www.chessprogramming.org/Move_Ordering)
+  - Hash move
+  - Pawn promote moves (QRBN)
+  - Capture moves
+    - [MVV-LVA](https://www.chessprogramming.org/MVV-LVA)
+  - Quiet moves
+    - [History Heuristic](https://www.chessprogramming.org/History_Heuristic)
+- [Selectivity](https://www.chessprogramming.org/Selectivity)
+  - [Extensions](https://www.chessprogramming.org/Extensions)
+    - [Check Extensions](https://www.chessprogramming.org/Check_Extensions)
+  - [Pruning](https://www.chessprogramming.org/Pruning)
+    - [Reverse Futility Pruning](https://www.chessprogramming.org/Reverse_Futility_Pruning) (disabled)
+    - [Null Move Pruning](https://www.chessprogramming.org/Null_Move_Pruning)
+  - [Quiescence Search](https://www.chessprogramming.org/Quiescence_Search)
+
+### Evaluation
+- [Simplified Evaluation Function](https://www.chessprogramming.org/Simplified_Evaluation_Function)
+
+### Interface
+- [Command Line Interface](https://www.chessprogramming.org/CLI)
+
+### Others
+- [FEN](https://www.chessprogramming.org/Forsyth-Edwards_Notation) for load/save game from/to file
+- [Zobrist Hashing](https://www.chessprogramming.org/Zobrist_Hashing) for control repetition of positions
 
 ## Chess 1.0
 Version: 20.01.2019  
@@ -19,7 +86,7 @@ Compiler: GCC 15.2.0 (MSYS2)
 
 ### Board Representation
 - [8x8 Board](https://www.chessprogramming.org/8x8_Board)
-- [10x12 Board](https://www.chessprogramming.org/10x12_Board) for move generation
+- [10x12 Board](https://www.chessprogramming.org/10x12_Board) for generating moves and checking attacks on the square
 - [Piece-Lists](https://www.chessprogramming.org/Piece-Lists)
 
 ### Search
@@ -51,7 +118,7 @@ Compiler: GCC 15.2.0 (MSYS2)
     - [Null Move Pruning](https://www.chessprogramming.org/Null_Move_Pruning)
   - [Reductions](https://www.chessprogramming.org/Reductions)
     - [Late Move Reductions](https://www.chessprogramming.org/Late_Move_Reductions) (disabled)
-  - [Quiescence Search](https://www.chessprogramming.org/Quiescence_Search) with check
+  - [Quiescence Search](https://www.chessprogramming.org/Quiescence_Search)
     - [Mate Distance Pruning](https://www.chessprogramming.org/Mate_Distance_Pruning)
     - Bad capture pruning ([Static Exchange Evaluation](https://www.chessprogramming.org/Static_Exchange_Evaluation)) (disabled)
 
